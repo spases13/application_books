@@ -5,16 +5,19 @@ import fr.norsys.application_books.entities.Book;
 import fr.norsys.application_books.exceptions.AuthorNotFoundException;
 import fr.norsys.application_books.services.AuthorService;
 import fr.norsys.application_books.services.BookService;
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@Validated 
 public class BookstoreController {
 
     @Autowired
@@ -41,7 +44,7 @@ public class BookstoreController {
     }
 
     @PostMapping("/authors")
-    public ResponseEntity<Void> createAuthor(@RequestBody Author author) {
+    public ResponseEntity<Void> createAuthor(@Valid @RequestBody  Author author) {
         authorService.saveAuthor(author);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
